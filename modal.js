@@ -42,13 +42,34 @@ function validateTextInput(inputElement, errorMessage) {
 //******************FONCTION VALIDATION CHAMPS EMAIL**************************
 function validateEmail(email) {
   // Utilisez une regex pour vérifier la validité de l'e-mail
- let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 }
 
+//***************FONCTION POUR EFFACER LES ERREURS D'UN CHAMPS DONNE****************
+function clearErrorForField(event) {
+  // Obtenir le champ associé à l'événement
+  let inputElement = event.target;
 
+  // Trouver le message d'erreur associé à ce champ (s'il existe)
+  let errorElement = inputElement.parentNode.querySelector(".error-message");
 
+  // Si un message d'erreur existe, supprimer
+  if (errorElement) {
+    errorElement.parentNode.removeChild(errorElement);
 
+    // Réinitialiser la bordure à sa valeur par défaut
+    inputElement.style.border = "";
+  }
+}
+const form = document.querySelector("form");
+
+//****** */ Quand on submit empeche le rechargement de la page******************
+form.addEventListener("submit", (event) => {
+  // On empêche le comportement par défaut
+  event.preventDefault();
+  console.log("Il n’y a pas eu de rechargement de page");
+});
 
 //************FORMULAIRE VALIDATION********* */
 function validate() {
@@ -81,6 +102,9 @@ function validate() {
       "Veuillez entrer 2 caractères ou plus pour le prénom."
     )
   ) {
+    let textControlPrenom = document.querySelector(".text-control-prenom");
+    textControlPrenom.style.border = "3px solid red";
+
     isValid = false;
   }
 
@@ -91,20 +115,26 @@ function validate() {
       "Veuillez entrer 2 caractères ou plus pour le nom."
     )
   ) {
+    let textControlNom = document.querySelector(".text-control-nom");
+    textControlNom.style.border = "3px solid red";
     isValid = false;
   }
 
-//*****je valide l'email********* */
+  //*****je valide l'email********* */
   if (!validateEmail(email)) {
     displayError(emailInput, "Veuillez entrer une adresse e-mail valide.");
     isValid = false;
+    let textControlEmail = document.querySelector(".text-control-email");
+    textControlEmail.style.border = "3px solid red";
   }
-
+  //*************je valide le nombre de tournois****************** */
   if (quantity === "" || isNaN(quantity)) {
     displayError(quantityInput, "Veuillez entrer un nombre valide.");
     isValid = false;
+    let textControlQuantity = document.querySelector(".text-control-quantity");
+    textControlQuantity.style.border = "3px solid red";
   }
-
+  //*********************je valide le choix********************** */
   let locationSelected = false;
   locationInputs.forEach(function (locationInput) {
     if (locationInput.checked) {
@@ -116,7 +146,7 @@ function validate() {
     displayError(locationInputs[0], "Vous devez choisir une option.");
     isValid = false;
   }
-
+  //**************je verifie les terme premiere cas cochee******************** */
   if (!checkbox1Input.checked) {
     displayError(
       checkbox1Input,
@@ -125,7 +155,7 @@ function validate() {
     isValid = false;
   }
 
-  // Ajoutez des gestionnaires d'événements input à vos champs de formulaire
+  //**** */ Ajoutez des gestionnaires d'événements input à vos champs de formulaire efface les erreur****
   firstNameInput.addEventListener("input", clearErrorForField);
   lastNameInput.addEventListener("input", clearErrorForField);
   emailInput.addEventListener("input", clearErrorForField);
@@ -137,26 +167,6 @@ function validate() {
   locationInputs.forEach((locationInput) => {
     locationInput.addEventListener("input", clearErrorForField);
   });
-
-  // La fonction pour effacer les messages d'erreur pour un champ donné
-
-  function clearErrorForField(event) {
-    // Obtenir le champ associé à l'événement
-    let inputElement = event.target;
-
-    // je trouve le message d'erreur associé à ce champ (s'il existe)
-    let errorElement = inputElement.parentNode.querySelector(".error-message");
-
-    // Si un message d'erreur existe, supprime
-    if (errorElement) {
-      errorElement.parentNode.removeChild(errorElement);
-    }
-  }
-  function hideConfirmationMessage() {
-    console.log("hideConfirmationMessage");
-    let confirmationMessage = document.getElementById("confirmation-message");
-    confirmationMessage.style.display = "none";
-  }
 
   if (isValid) {
     // Validation réussie, afficher un message de confirmation
@@ -172,14 +182,6 @@ function validate() {
 
   return isValid;
 }
-const form = document.querySelector("form");
-
-// Quand on submit
-form.addEventListener("submit", (event) => {
-  // On empêche le comportement par défaut
-  event.preventDefault();
-  console.log("Il n’y a pas eu de rechargement de page");
-});
 
 function displayError(inputElement, errorMessage) {
   // Crée un élément span pour afficher l'erreur
