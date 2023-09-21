@@ -73,21 +73,13 @@ img {
   font-size: 10px;
 }
 
-@media screen and (max-width: 1140px) {
-  .topnav a {
-    display: none;
-  }
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
-    color:#fe142f;
-    font-size: 50px;
-  }
-  
+
+@media screen and (max-width: 1134px) {
+/* Ajustez la position du menu lorsque l'icône est cliquée */
+.topnav.responsive .icon {
+  left: -100px; /* Ajustez cette valeur pour déplacer l'icône et afficher le menu à gauche */
 }
 
-@media screen and (max-width: 768px) {
   .topnav a {
     display: none;
   }
@@ -105,7 +97,17 @@ img {
   }
 }
 
+
+
+
+
+
 @media screen and (max-width: 540px) {
+/* Ajustez la position du menu lorsque l'icône est cliquée */
+.topnav.responsive .icon {
+  left: -100px; /* Ajustez cette valeur pour déplacer l'icône et afficher le menu à gauche */
+}
+
   .topnav a {
     display: none;
   }

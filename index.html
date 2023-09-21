@@ -17,15 +17,15 @@
       <img alt="logo" src="Logo.png" width="auto" height="auto" />
     </div>
     <div class="main-navbar">
-      
+      <a href="javascript:void(0);" class="icon" onclick="editNav()">
+        <i class="fa fa-bars"></i>
+      </a>
       <a href="#" class="active"><span>Accueil</span></a>
       <a href="#"><span>Détails de l'évènement</span></a>
       <a href="#"><span>À propos</span></a>
       <a href="#"><span>Contact</span></a>
       <a href="#"><span>Évènements passés</span></a>
-      <a href="javascript:void(0);" class="icon" onclick="editNav()">
-        <i class="fa fa-bars"></i>
-      </a>
+    
     </div>
     </div>
   </div>
@@ -53,7 +53,7 @@
 
       <div class="bground">
         <div class="content">
-          <span class="close" id="close-modal"></span>
+          <span class="close close-button" id="close-modal"></span>
           <div class="modal-body">
            
             <form
@@ -93,7 +93,10 @@
                   id="email"
                   name="email"
                   
-                /><br>
+                />
+               
+              
+                <br>
               </div>
               <div class="formData">
                 <label for="birthdate">Date de naissance</label><br>

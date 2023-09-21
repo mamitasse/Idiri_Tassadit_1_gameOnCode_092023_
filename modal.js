@@ -12,27 +12,49 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
+//*********DECLENCHE LA MODAL***********
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
+//***************AFFICHE LE FORMULAIRE MODAL*******************************
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
 }
+
+//********************FONCTION FERME LA MODAL****************
 function closeModal() {
   modalbg.style.display = "none";
 }
+
+//*******************FONCTION DE VALIDATION DES CHAMPS TEXTES**************
 function validateTextInput(inputElement, errorMessage) {
   console.log(errorMessage);
   const inputValue = inputElement.value;
   if (inputValue === "" || inputValue.length < 2) {
     displayError(inputElement, errorMessage);
+
     return false;
   }
   return true;
 }
-//formulaire
+
+//******************FONCTION VALIDATION CHAMPS EMAIL**************************
+function validateEmail(email) {
+  // Utilisez une regex pour vérifier la validité de l'e-mail
+ let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+}
+
+
+
+
+
+//************FORMULAIRE VALIDATION********* */
 function validate() {
+  //***************VARIABLES********************* */
+  //RECUPERATION DES CHAMPS
+
   let firstNameInput = document.getElementById("first");
   let lastNameInput = document.getElementById("last");
   let emailInput = document.getElementById("email");
@@ -40,6 +62,7 @@ function validate() {
   let locationInputs = document.querySelectorAll('input[name="location"]');
   let checkbox1Input = document.getElementById("checkbox1");
 
+  //**********************SUPPRESSION DES ESPACES INUTILES****************************************
   let firstName = firstNameInput.value.trim();
   let lastName = lastNameInput.value.trim();
   let email = emailInput.value.trim();
@@ -70,7 +93,9 @@ function validate() {
   ) {
     isValid = false;
   }
-  if (!isValidEmail(email)) {
+
+//*****je valide l'email********* */
+  if (!validateEmail(email)) {
     displayError(emailInput, "Veuillez entrer une adresse e-mail valide.");
     isValid = false;
   }
@@ -155,11 +180,6 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   console.log("Il n’y a pas eu de rechargement de page");
 });
-function isValidEmail(email) {
-  // Utilisez une expression régulière pour valider l'e-mail.
-  let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
 
 function displayError(inputElement, errorMessage) {
   // Crée un élément span pour afficher l'erreur
