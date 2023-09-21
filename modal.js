@@ -54,7 +54,7 @@ function validateBirthdate() {
 
   // Vérifier si le champ de date de naissance est vide
   if (birthdateValue === "") {
-    alert("Veuillez entrer votre date de naissance.");
+    
     return false;
   }
 
@@ -63,7 +63,7 @@ function validateBirthdate() {
 
   // Vérifier si la date de naissance est valide
   if (isNaN(birthdateDate.getTime())) {
-    alert("Veuillez entrer une date de naissance valide.");
+  
     return false;
   }
 
@@ -72,25 +72,20 @@ function validateBirthdate() {
 
   // Vérifier si la date de naissance est postérieure à la date actuelle
   if (birthdateDate >= currentDate) {
-    alert("La date de naissance doit être antérieure à la date actuelle.");
+   
     return false;
   }
 
   // Vérifier si la personne est née avant 2006
   const yearOfBirth = birthdateDate.getFullYear();
-  if (yearOfBirth >= 2006) {
-    alert("La personne doit être née avant 2006.");
+  if (yearOfBirth >= 2006 || yearOfBirth<1920) {
+   
     return false;
   }
 
   return true; // La date de naissance est conforme
 }
 
-// À ajouter dans votre code existant pour l'écouteur d'événement "submit"
-form.addEventListener("submit", function (e) {
-  e.preventDefault(); // Empêche la soumission du formulaire par défaut
-
-});
 
 //***************FONCTION POUR EFFACER LES ERREURS D'UN CHAMPS DONNE****************
 function clearErrorForField(event) {
@@ -128,12 +123,14 @@ function validate() {
   let quantityInput = document.getElementById("quantity");
   let locationInputs = document.querySelectorAll('input[name="location"]');
   let checkbox1Input = document.getElementById("checkbox1");
+  let birthdateInput = document.getElementById("birthdate");
 
-  //**********************SUPPRESSION DES ESPACES INUTILES****************************************
+  //**********************SUPPRESSION DES ESPACES INUTILES*************************************
   let firstName = firstNameInput.value.trim();
   let lastName = lastNameInput.value.trim();
   let email = emailInput.value.trim();
   let quantity = quantityInput.value.trim();
+  let birthdate=birthdateInput.value
 
   // Réinitialiser les messages d'erreur
   clearErrors();
@@ -173,6 +170,14 @@ function validate() {
     let textControlEmail = document.querySelector(".text-control-email");
     textControlEmail.style.border = "3px solid red";
   }
+  if(!validateBirthdate(birthdate)){
+    displayError(birthdateInput, "Veuillez entrer une date de naissance valide .");
+    isValid = false;
+    let textControlBirthdate = document.querySelector(".text-control-birthdate");
+    textControlBirthdate.style.border = "3px solid red";
+  }
+
+  
   //*************je valide le nombre de tournois****************** */
   if (quantity === "" || isNaN(quantity)) {
     displayError(quantityInput, "Veuillez entrer un nombre valide.");
@@ -201,14 +206,13 @@ function validate() {
     isValid = false;
   }
 
-
-  
   //**** */ Ajoutez des gestionnaires d'événements input à vos champs de formulaire efface les erreur****
   firstNameInput.addEventListener("input", clearErrorForField);
   lastNameInput.addEventListener("input", clearErrorForField);
   emailInput.addEventListener("input", clearErrorForField);
   quantityInput.addEventListener("input", clearErrorForField);
   checkbox1Input.addEventListener("input", clearErrorForField);
+  birthdateInput.addEventListener("input", clearErrorForField);
 
   // Pour les éléments de la liste des villes
 
