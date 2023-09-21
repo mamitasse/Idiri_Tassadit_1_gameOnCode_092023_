@@ -46,6 +46,52 @@ function validateEmail(email) {
   return emailRegex.test(email);
 }
 
+//**********************validation birthdate********************** */
+// Fonction de validation pour la date de naissance
+function validateBirthdate() {
+  const birthdateInput = document.getElementById("birthdate");
+  const birthdateValue = birthdateInput.value;
+
+  // Vérifier si le champ de date de naissance est vide
+  if (birthdateValue === "") {
+    alert("Veuillez entrer votre date de naissance.");
+    return false;
+  }
+
+  // Créer un objet Date à partir de la valeur du champ de date de naissance
+  const birthdateDate = new Date(birthdateValue);
+
+  // Vérifier si la date de naissance est valide
+  if (isNaN(birthdateDate.getTime())) {
+    alert("Veuillez entrer une date de naissance valide.");
+    return false;
+  }
+
+  // Récupérer la date actuelle
+  const currentDate = new Date();
+
+  // Vérifier si la date de naissance est postérieure à la date actuelle
+  if (birthdateDate >= currentDate) {
+    alert("La date de naissance doit être antérieure à la date actuelle.");
+    return false;
+  }
+
+  // Vérifier si la personne est née avant 2006
+  const yearOfBirth = birthdateDate.getFullYear();
+  if (yearOfBirth >= 2006) {
+    alert("La personne doit être née avant 2006.");
+    return false;
+  }
+
+  return true; // La date de naissance est conforme
+}
+
+// À ajouter dans votre code existant pour l'écouteur d'événement "submit"
+form.addEventListener("submit", function (e) {
+  e.preventDefault(); // Empêche la soumission du formulaire par défaut
+
+});
+
 //***************FONCTION POUR EFFACER LES ERREURS D'UN CHAMPS DONNE****************
 function clearErrorForField(event) {
   // Obtenir le champ associé à l'événement
@@ -155,6 +201,8 @@ function validate() {
     isValid = false;
   }
 
+
+  
   //**** */ Ajoutez des gestionnaires d'événements input à vos champs de formulaire efface les erreur****
   firstNameInput.addEventListener("input", clearErrorForField);
   lastNameInput.addEventListener("input", clearErrorForField);
