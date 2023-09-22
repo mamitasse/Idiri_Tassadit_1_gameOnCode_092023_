@@ -112,9 +112,31 @@ form.addEventListener("submit", (event) => {
   console.log("Il n’y a pas eu de rechargement de page");
 });
 
+function displayError(inputElement, errorMessage) {
+  // Crée un élément span pour afficher l'erreur
+  let errorElement = document.createElement("span");
+  errorElement.className = "error-message";
+  errorElement.innerHTML = errorMessage;
+
+  // Ajoute l'élément span après l'élément d'entrée
+  inputElement.parentNode.appendChild(errorElement);
+}
+
+// Supprime tous les messages d'erreur
+function clearErrors() {
+  let errorMessages = document.querySelectorAll(".error-message");
+  errorMessages.forEach(function (errorMessage) {
+    errorMessage.parentNode.removeChild(errorMessage);
+  });
+}
+
 //************FORMULAIRE VALIDATION********* */
 function validate() {
   //***************VARIABLES********************* */
+  // Réinitialiser les messages d'erreur
+  clearErrors();
+
+  
   //RECUPERATION DES CHAMPS
 
   let firstNameInput = document.getElementById("first");
@@ -132,9 +154,15 @@ function validate() {
   let quantity = quantityInput.value.trim();
   let birthdate=birthdateInput.value
 
-  // Réinitialiser les messages d'erreur
-  clearErrors();
+ //**** */ Ajoutez des gestionnaires d'événements input aux champs de formulaire efface les erreur****
+ firstNameInput.addEventListener("input", clearErrorForField);
+ lastNameInput.addEventListener("input", clearErrorForField);
+ emailInput.addEventListener("input", clearErrorForField);
+ quantityInput.addEventListener("input", clearErrorForField);
+ checkbox1Input.addEventListener("input", clearErrorForField);
+ birthdateInput.addEventListener("input", clearErrorForField);
 
+  
   let isValid = true;
   let errorMessageText = "Veuillez entrer 2 caractères ou plus pour le prénom.";
 
@@ -206,13 +234,7 @@ function validate() {
     isValid = false;
   }
 
-  //**** */ Ajoutez des gestionnaires d'événements input à vos champs de formulaire efface les erreur****
-  firstNameInput.addEventListener("input", clearErrorForField);
-  lastNameInput.addEventListener("input", clearErrorForField);
-  emailInput.addEventListener("input", clearErrorForField);
-  quantityInput.addEventListener("input", clearErrorForField);
-  checkbox1Input.addEventListener("input", clearErrorForField);
-  birthdateInput.addEventListener("input", clearErrorForField);
+ 
 
   // Pour les éléments de la liste des villes
 
@@ -235,23 +257,9 @@ function validate() {
   return isValid;
 }
 
-function displayError(inputElement, errorMessage) {
-  // Crée un élément span pour afficher l'erreur
-  let errorElement = document.createElement("span");
-  errorElement.className = "error-message";
-  errorElement.innerHTML = errorMessage;
 
-  // Ajoute l'élément span après l'élément d'entrée
-  inputElement.parentNode.appendChild(errorElement);
-}
 
-function clearErrors() {
-  // Supprime tous les messages d'erreur
-  let errorMessages = document.querySelectorAll(".error-message");
-  errorMessages.forEach(function (errorMessage) {
-    errorMessage.parentNode.removeChild(errorMessage);
-  });
-}
+
 // j'joute un gestionnaire d'événements au bouton "Fermer"
 const closeButton = document.getElementById("close-button");
 
