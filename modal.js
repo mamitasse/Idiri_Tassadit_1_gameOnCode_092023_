@@ -1,3 +1,4 @@
+// Fonction pour modifier la navigation en mode responsive
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -7,27 +8,25 @@ function editNav() {
   }
 }
 
-// DOM Elements
+// Sélection des éléments du DOM
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
-//*********DECLENCHE LA MODAL***********
-// launch modal event
+// Fonction pour déclencher l'ouverture de la modal
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-//***************AFFICHE LE FORMULAIRE MODAL*******************************
-// launch modal form
+// Fonction pour afficher la modal
 function launchModal() {
   modalbg.style.display = "block";
 }
 
-//********************FONCTION FERME LA MODAL****************
+// Fonction pour fermer la modal
 function closeModal() {
   modalbg.style.display = "none";
 }
 
-//*******************FONCTION DE VALIDATION DES CHAMPS TEXTES**************
+// Fonction de validation des champs de texte
 function validateTextInput(inputElement, errorMessage) {
   console.log(errorMessage);
   const inputValue = inputElement.value;
@@ -39,22 +38,18 @@ function validateTextInput(inputElement, errorMessage) {
   return true;
 }
 
-//******************FONCTION VALIDATION CHAMPS EMAIL**************************
+// Fonction de validation de l'adresse email
 function validateEmail(email) {
   // Utilisez une regex pour vérifier la validité de l'e-mail
   let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 }
 
-//**********************validation birthdate********************** */
-// Fonction de validation pour la date de naissance
+// Fonction de validation de la date de naissance
 function validateBirthdate() {
   const birthdateInput = document.getElementById("birthdate");
   const birthdateValue = birthdateInput.value;
-
-  // Vérifier si le champ de date de naissance est vide
   if (birthdateValue === "") {
-    
     return false;
   }
 
@@ -63,31 +58,23 @@ function validateBirthdate() {
 
   // Vérifier si la date de naissance est valide
   if (isNaN(birthdateDate.getTime())) {
-  
     return false;
   }
 
   // Récupérer la date actuelle
   const currentDate = new Date();
-
-  // Vérifier si la date de naissance est postérieure à la date actuelle
   if (birthdateDate >= currentDate) {
-   
     return false;
   }
-
   // Vérifier si la personne est née avant 2006
   const yearOfBirth = birthdateDate.getFullYear();
-  if (yearOfBirth >= 2006 || yearOfBirth<1920) {
-   
+  if (yearOfBirth >= 2006 || yearOfBirth < 1920) {
     return false;
   }
-
   return true; // La date de naissance est conforme
 }
 
-
-//***************FONCTION POUR EFFACER LES ERREURS D'UN CHAMPS DONNE****************
+//fonction pour effacer les erreur d'un champs donne
 function clearErrorForField(event) {
   // Obtenir le champ associé à l'événement
   let inputElement = event.target;
@@ -105,19 +92,19 @@ function clearErrorForField(event) {
 }
 const form = document.querySelector("form");
 
-//****** */ Quand on submit empeche le rechargement de la page******************
+// Quand on submit empeche le rechargement de la page
 form.addEventListener("submit", (event) => {
   // On empêche le comportement par défaut
   event.preventDefault();
   console.log("Il n’y a pas eu de rechargement de page");
 });
 
+// Fonction pour afficher un message d'erreur
 function displayError(inputElement, errorMessage) {
   // Crée un élément span pour afficher l'erreur
   let errorElement = document.createElement("span");
   errorElement.className = "error-message";
   errorElement.innerHTML = errorMessage;
-
   // Ajoute l'élément span après l'élément d'entrée
   inputElement.parentNode.appendChild(errorElement);
 }
@@ -130,15 +117,12 @@ function clearErrors() {
   });
 }
 
-//************FORMULAIRE VALIDATION********* */
+// Fonction de validation du formulaire
 function validate() {
-  //***************VARIABLES********************* */
   // Réinitialiser les messages d'erreur
   clearErrors();
 
-  
-  //RECUPERATION DES CHAMPS
-
+  // Récupération des champs du formulaire
   let firstNameInput = document.getElementById("first");
   let lastNameInput = document.getElementById("last");
   let emailInput = document.getElementById("email");
@@ -147,22 +131,25 @@ function validate() {
   let checkbox1Input = document.getElementById("checkbox1");
   let birthdateInput = document.getElementById("birthdate");
 
-  //**********************SUPPRESSION DES ESPACES INUTILES*************************************
+  // Suppression des espaces inutiles des valeurs des champs
   let firstName = firstNameInput.value.trim();
   let lastName = lastNameInput.value.trim();
   let email = emailInput.value.trim();
   let quantity = quantityInput.value.trim();
-  let birthdate=birthdateInput.value
+  let birthdate = birthdateInput.value;
 
- //**** */ Ajoutez des gestionnaires d'événements input aux champs de formulaire efface les erreur****
- firstNameInput.addEventListener("input", clearErrorForField);
- lastNameInput.addEventListener("input", clearErrorForField);
- emailInput.addEventListener("input", clearErrorForField);
- quantityInput.addEventListener("input", clearErrorForField);
- checkbox1Input.addEventListener("input", clearErrorForField);
- birthdateInput.addEventListener("input", clearErrorForField);
+  // Ajout des gestionnaires d'événements input pour effacer les erreurs
+  firstNameInput.addEventListener("input", clearErrorForField);
+  lastNameInput.addEventListener("input", clearErrorForField);
+  emailInput.addEventListener("input", clearErrorForField);
+  quantityInput.addEventListener("input", clearErrorForField);
+  checkbox1Input.addEventListener("input", clearErrorForField);
+  birthdateInput.addEventListener("input", clearErrorForField);
+  // Pour les éléments de la liste des villes
+  locationInputs.forEach((locationInput) => {
+    locationInput.addEventListener("input", clearErrorForField);
+  });
 
-  
   let isValid = true;
   let errorMessageText = "Veuillez entrer 2 caractères ou plus pour le prénom.";
 
@@ -191,29 +178,36 @@ function validate() {
     isValid = false;
   }
 
-  //*****je valide l'email********* */
+  //valider email
   if (!validateEmail(email)) {
     displayError(emailInput, "Veuillez entrer une adresse e-mail valide.");
     isValid = false;
     let textControlEmail = document.querySelector(".text-control-email");
     textControlEmail.style.border = "3px solid red";
   }
-  if(!validateBirthdate(birthdate)){
-    displayError(birthdateInput, "Veuillez entrer une date de naissance valide .");
+
+  // Validation de la date de naissance
+  if (!validateBirthdate(birthdate)) {
+    displayError(
+      birthdateInput,
+      "Veuillez entrer une date de naissance valide ."
+    );
     isValid = false;
-    let textControlBirthdate = document.querySelector(".text-control-birthdate");
+    let textControlBirthdate = document.querySelector(
+      ".text-control-birthdate"
+    );
     textControlBirthdate.style.border = "3px solid red";
   }
 
-  
-  //*************je valide le nombre de tournois****************** */
+  // Validation du nombre de tournois
   if (quantity === "" || isNaN(quantity)) {
     displayError(quantityInput, "Veuillez entrer un nombre valide.");
     isValid = false;
     let textControlQuantity = document.querySelector(".text-control-quantity");
     textControlQuantity.style.border = "3px solid red";
   }
-  //*********************je valide le choix********************** */
+
+  // Validation du choix de la ville
   let locationSelected = false;
   locationInputs.forEach(function (locationInput) {
     if (locationInput.checked) {
@@ -225,7 +219,8 @@ function validate() {
     displayError(locationInputs[0], "Vous devez choisir une option.");
     isValid = false;
   }
-  //**************je verifie les terme premiere cas cochee******************** */
+
+  // Validation de l'acceptation des termes et conditions
   if (!checkbox1Input.checked) {
     displayError(
       checkbox1Input,
@@ -234,14 +229,7 @@ function validate() {
     isValid = false;
   }
 
- 
-
-  // Pour les éléments de la liste des villes
-
-  locationInputs.forEach((locationInput) => {
-    locationInput.addEventListener("input", clearErrorForField);
-  });
-
+  //si tout est valide
   if (isValid) {
     // Validation réussie, afficher un message de confirmation
     let confirmationMessage = document.getElementById("confirmation-message");
@@ -257,10 +245,7 @@ function validate() {
   return isValid;
 }
 
-
-
-
-// j'joute un gestionnaire d'événements au bouton "Fermer"
+// j'ajoute un gestionnaire d'événements au bouton "Fermer"
 const closeButton = document.getElementById("close-button");
 
 if (closeButton) {
